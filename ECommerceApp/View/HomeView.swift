@@ -30,6 +30,13 @@ struct HomeView: View {
             .scrollDismissesKeyboard(.interactively)
             .ignoresSafeArea(edges: .top)
             .onAppear(perform: viewModel.loadProductItems)
+            .alert(EAString.error, isPresented: $viewModel.showAlert, actions: {
+                Button(action: {
+                    viewModel.resetProperties()
+                }, label: {
+                    Text(EAString.ok)
+                })
+            }, message: {Text(viewModel.alertMessage)})
     }
     
     

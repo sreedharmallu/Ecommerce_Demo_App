@@ -9,6 +9,8 @@ import Foundation
 
 class HomeViewModel: ObservableObject {
     @Published var isLoading: Bool = false
+    @Published var showAlert: Bool = false
+    @Published var alertMessage = ""
     @Published var products: [ProductItem] = []
     
     let categories: [String] = ["iPhone", "consoles", "laptop", "camera"]
@@ -23,12 +25,20 @@ class HomeViewModel: ObservableObject {
                     self?.products = decodedProductsList.compactMap({$0.toModel()})
                     self?.isLoading = false
                 }
-            } catch {
+            } catch(let error) {
                 DispatchQueue.main.async {[weak self] in
                     self?.isLoading = false
+                    self?.showAlert = true
+                    self?.alertMessage = error.localizedDescription
                 }
             }
         }
+    }
+    
+    func resetProperties() {
+        alertMessage = ""
+        showAlert = false
+        isLoading = true
     }
     
     @MainActor

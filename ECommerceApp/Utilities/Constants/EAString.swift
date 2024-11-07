@@ -9,6 +9,7 @@ import Foundation
 
 enum EAString {    
     static let emptyString = ""
+    static let error = "Error"
     
     static let home = "Home"
     static let cart = "Cart"
